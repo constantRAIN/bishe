@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--对应接口，写入sql语句-->
+
+<mapper namespace="com.code.rts.dao.TripsDao">
+
+
+    <select id="getAllTripsForAdmin" resultType="com.code.rts.entity.Trips"  parameterType="com.github.pagehelper.Page">
+        SELECT *
+        FROM `trips`
+    </select>
+
+    <update id="updateTripForAdmin" parameterType="com.code.rts.entity.Trips">
+        UPDATE `trips` SET
+        <if test="orginLocation != null and orginLocation != ''">
+            orgin_location = #{orginLocation}
+        </if>
+        <if test="destinationLocation != null and destinationLocation != ''">
+            ,destination_location = #{destinationLocation}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            ,start_time = #{startTime}
+        </if>
+        <if test="reachTime != null and reachTime != ''">
+            ,reach_time = #{reachTime}
+        </if>
+        <if test="spanDays != null and spanDays != ''">
+            ,span_days = #{spanDays}
+        </if>
+        <if test="carNum != null and carNum != ''">
+            ,car_num = #{carNum}
+        </if>
+        <if test="ticketPrice != null and ticketPrice != ''">
+            ,ticket_price = #{ticketPrice}
+        </if>
+        <if test="ticketNum != null and ticketNum != ''">
+            ,ticket_num = #{ticketNum}
+        </if>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除用户-->
+    <delete id="deleteTrip" parameterType="Integer">
+      DELETE FROM `trips` WHERE id=#{id}
+    </delete>
+</mapper>

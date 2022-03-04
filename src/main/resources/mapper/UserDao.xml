@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--对应接口，写入sql语句-->
+
+<mapper namespace="com.code.rts.dao.UserDao">
+    <update id="updateUserRegisterInfo" parameterType="com.code.rts.entity.User">
+        UPDATE `user` set
+        <if test="password != null and password != ''">
+            password = #{password}
+        </if>
+        where username = #{username}
+
+    </update>
+
+    <update id="updateUser" parameterType="com.code.rts.entity.User">
+        UPDATE  user SET
+        <if test="username != null and username != ''">
+            username = #{username}
+        </if>
+        <if test="trueName != null and trueName != ''">
+            ,true_name = #{trueName}
+        </if>
+        <if test="idCardNum != null and idCardNum != ''">
+            ,id_card_num = #{idCardNum}
+        </if>
+        <if test="phoneNum != null and phoneNum != ''">
+            ,phone_num = #{phoneNum}
+        </if>
+        <if test="age != null and age != ''">
+            ,age = #{age}
+        </if>
+        <if test="sex != null and sex != ''">
+            ,sex = #{sex}
+        </if>
+        where id = #{id}
+    </update>
+
+
+    <select id="getUsersCount" resultType="Integer">
+        SELECT COUNT(1)
+        FROM `user`
+    </select>
+
+
+    <select id="getAllUsers" resultType="com.code.rts.entity.User"  parameterType="com.github.pagehelper.Page">
+        SELECT id, username, true_name, id_card_num, phone_num, age, sex
+        FROM `user`
+    </select>
+
+    <!--根据id删除用户-->
+    <delete id="deleteUser" parameterType="Integer">
+      DELETE FROM `user` WHERE id=#{id}
+    </delete>
+
+</mapper>
